@@ -1134,7 +1134,9 @@ class MoAChatCompletions:
         if merged:
             agg_messages = merge_same_role_messages(agg_messages)
         send = functools.partial(
-            call_llm, task="moa_aggregator", temperature=prepared["aggregator_temperature"],
+            call_llm, task="moa_aggregator",
+            _skip_auxiliary_observers=True,
+            temperature=prepared["aggregator_temperature"],
             max_tokens=api_kwargs.get("max_tokens"), tools=tools, extra_body=agg_extra_body,
             reasoning_config=_aggregator_reasoning_config(aggregator),  # same policy as direct create()
             **stream_kwargs, **agg_runtime,
